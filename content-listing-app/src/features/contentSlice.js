@@ -1,25 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  value: 0,
+  page: 1
 }
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const contentSlice = createSlice({
+  name: 'content',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1
+    addPage: (state) => {
+      state.page += 1;
     },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
-    },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    }
   },
 })
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { addPage, setPage } = contentSlice.actions
 
-export default counterSlice.reducer
+export default contentSlice.reducer

@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 
 const useLazyLoad = (threshold = 0.5) => {
   const [inView, setInView] = useState(false);
-  console.log(inView, "inView inView inView");
   const placeholderRef = useRef();
 
   function onIntersection(entries, obs) {

@@ -1,9 +1,7 @@
 const  List = ({ placeholderRef, inView, data = [] }) => {
-    console.log(inView, "inView, inView , inView");
-    console.log(placeholderRef, 'placeholderRef placeholderRef placeholderRef');
   return (
     <>
-      {data?.["content-items"]?.content.map((elem, index) => {
+      {data.map((elem, index) => {
         return (
           <div
             key={index}
