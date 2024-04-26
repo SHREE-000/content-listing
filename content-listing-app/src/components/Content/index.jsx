@@ -1,3 +1,4 @@
+import { memo } from "react";
 import List from "./List";
 import Spinner from "../../shared/components/Spinner";
 import useLazyLoad from "../../utils/customHooks/useLazyLoad";
@@ -36,4 +37,4 @@ const Content = () => {
     </>
   );
 };
-export default Content;
+export default memo(Content);

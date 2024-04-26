@@ -1,3 +1,4 @@
+import { memo, useState } from "react";
 import { ALT_IMG, baseURL, HEADING } from "../../constants/general";
 import {
   generalFlexStyle,
@@ -7,7 +8,6 @@ import ButtonWithIMG from "../../shared/components/ButtonWithIMG";
 import { useDispatch, useSelector } from "react-redux";
 import { setBackOperation, setSearch } from "../../features/contentSlice";
 import InputWithClear from "../../shared/components/InputWithClear";
-import { useState } from "react";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const Navbar = () => {
   };
   return (
     <div
-      className="mt-5 mb-5 flex flex-col sm:flex-row sm:align-middle"
+      className="mt-5 mb-5 flex flex-col xs:flex-row xs:align-middle"
       style={{ ...generalFlexStyle, justifyContent: "space-around" }}
     >
       <div style={generalFlexStyle}>
@@ -78,4 +78,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

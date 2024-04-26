@@ -5,7 +5,6 @@ import { setConent, setReqPageNo } from "../../features/contentSlice";
 
 const useAPI = (url, page = 1) => {
   const dispatch = useDispatch();
-  const [dat, setData] = useState([]);
   const search = useSelector((state) => state.content.search);
   const reqPageNo = useSelector((state) => state.content.reqPageNo);
   const isBackButton = useSelector((state) => state.content.isBackButton);
@@ -18,7 +17,6 @@ const useAPI = (url, page = 1) => {
     const filtered = data.filter((item) =>
       item.name.toLowerCase().includes(search.toLowerCase())
     );
-    setData(filtered);
     dispatch(setConent(filtered));
   };
 
@@ -32,37 +30,26 @@ const useAPI = (url, page = 1) => {
           response?.data?.page?.["page-size-requested"]
       )
     );
-    // dispatch(setConent((ele)=> console.log(ele, 'elem')))
-    setData((prevData) => {
+    if (page === 1 && reqPageNo === 0) {
       dispatch(setConent(response?.data?.page?.["content-items"]?.content));
-      if (page === 1 && reqPageNo === 0) {
-        return response?.data?.page?.["content-items"]?.content;
-      }
-      if (prevData.length < page * 20) {
-        dispatch(setConent([
-          ...prevData,
+    } else if (data.length < page * 20) {
+      dispatch(
+        setConent([
+          ...data,
           ...response?.data?.page?.["content-items"]?.content,
-        ]));
-        return [
-          ...prevData,
-          ...response?.data?.page?.["content-items"]?.content,
-        ];
-      }
-      else {
-        dispatch(setConent(prevData));
-        return prevData;
-      };
-    });
+        ])
+      );
+    } else {
+      dispatch(setConent(data));
+    }
     setLoading(false);
   };
 
   // state management using page
   useEffect(() => {
     if (page === 1 && data.length > 20) {
-        setData((data) => {
-        dispatch(setConent(data.splice(0, 20)));
-        return data.splice(0, 20);
-      });
+      const tempData = [...data];
+      dispatch(setConent(tempData.splice(0, 20)));
       dispatch(setReqPageNo(0));
     } else if (page > reqPageNo && page <= totalPage) fetchApi();
   }, [page]);
