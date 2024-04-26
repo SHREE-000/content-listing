@@ -1,22 +1,56 @@
-import { ALT_IMG, baseURL, HEADING } from "../../constants/url";
+import { ALT_IMG, baseURL, HEADING } from "../../constants/general";
 import {
   generalFlexStyle,
   generalStyle,
 } from "../../shared/styles/basicUIStyles";
 import ButtonWithIMG from "../../shared/components/ButtonWithIMG";
-import { useSelector, useDispatch } from 'react-redux'
-import { backOperation, setPage } from '../../features/contentSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { setBackOperation, setSearch } from "../../features/contentSlice";
+import InputWithClear from "../../shared/components/InputWithClear";
+import { useState } from "react";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const handlerClick = () => {
-    dispatch(setPage(1));
+  const contents = useSelector(state => state.content.contents);
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+
+  const handlePage = () => {
+    dispatch(setBackOperation());
+  };
+  const handleChange = (event) => {
+    const inputValue = event.target.value;
+    setSearchValue(inputValue);
+    const filteredSuggestions = contents.filter((suggestion) =>
+    suggestion.name.toLowerCase().startsWith(inputValue.toLowerCase())
+  );
+  setFilteredSuggestions(filteredSuggestions);
+  };
+  const handleClear = () => {
+    setSearchValue("");
+    dispatch(setSearch(""));
+    setFilteredSuggestions([]);
+  };
+  const handleSearch = () => {
+    dispatch(setSearch(searchValue));
+    setFilteredSuggestions([]);
+    if (!searchValue.trim()) dispatch(setBackOperation());
+  };
+
+  const handleSuggestionClick = (value) => {
+    setSearchValue(value);
+    dispatch(setSearch(value));
+    setFilteredSuggestions([]);
+    if (!value.trim()) dispatch(setBackOperation());
   };
   return (
-    <div className="mt-5 mb-5" style={{...generalFlexStyle, justifyContent: "space-around"}}>
+    <div
+      className="mt-5 mb-5 flex flex-col sm:flex-row sm:align-middle"
+      style={{ ...generalFlexStyle, justifyContent: "space-around" }}
+    >
       <div style={generalFlexStyle}>
         <ButtonWithIMG
-          handlerClick={handlerClick}
+          handlerClick={handlePage}
           style={generalStyle}
           src={`${baseURL.DIAGNAL_API}/images/Back.png`}
           alt={ALT_IMG.LEFT_CHEVRON}
@@ -24,17 +58,20 @@ const Navbar = () => {
         <h4 className="ml-5">{HEADING.TITLE}</h4>
       </div>
       <div className="flex mt-2">
-        <input type="text" className="text-black h-5 mr-1 rounded-md"/>
-        <button type="button" className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-500 hover:text-gray-700" onclick="clearInput()">
-    &times;
-  </button>
-
+        <InputWithClear
+          filteredSuggestions={filteredSuggestions}
+          handleChange={handleChange}
+          handleClear={handleClear}
+          value={searchValue}
+          handleSuggestionClick={handleSuggestionClick}
+        />
         <div>
-        <ButtonWithIMG
-        style={generalStyle}
-        src={`${baseURL.DIAGNAL_API}/images/search.png`}
-        alt={ALT_IMG.SEARCH}
-      />
+          <ButtonWithIMG
+            handlerClick={handleSearch}
+            style={generalStyle}
+            src={`${baseURL.DIAGNAL_API}/images/search.png`}
+            alt={ALT_IMG.SEARCH}
+          />
         </div>
       </div>
     </div>

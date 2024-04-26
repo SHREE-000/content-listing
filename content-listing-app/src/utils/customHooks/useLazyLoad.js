@@ -4,6 +4,7 @@ const useLazyLoad = (threshold = 0.5) => {
   const [inView, setInView] = useState(false);
   const placeholderRef = useRef();
 
+  // callback for IntersectionObserver
   function onIntersection(entries, obs) {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -15,8 +16,8 @@ const useLazyLoad = (threshold = 0.5) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersection, {
-      root: null, 
-      threshold: threshold, 
+      root: null,
+      threshold: threshold,
     });
 
     if (placeholderRef.current) {

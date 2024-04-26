@@ -1,3 +1,5 @@
+import { ALT_IMG } from "../../constants/general";
+
 const  List = ({ placeholderRef, inView, data = [] }) => {
   return (
     <>
@@ -8,11 +10,11 @@ const  List = ({ placeholderRef, inView, data = [] }) => {
             className="w-full p-2 sm:p-2 md:p-6 lg:p-8 flex flex-col justify-center"
           >
             {inView ? (
-              <img alt="romantic-comedy" />
+              <img alt={ALT_IMG.CONTENT}/>
             ) : (
               <img
                 src={`https://test.create.diagnal.com/images/${elem?.["poster-image"]}`}
-                alt="romantic-comedy"
+                alt={ALT_IMG.CONTENT}
                 ref={placeholderRef}
               />
             )}
