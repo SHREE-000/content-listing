@@ -22,27 +22,31 @@ const useAPI = (url, page = 1) => {
 
   // axios call
   const fetchApi = async () => {
-    const response = await axios.get(url);
-    dispatch(setReqPageNo(response?.data?.page?.["page-num-requested"]));
-    setTotalPage(
-      Math.ceil(
-        response?.data?.page?.["total-content-items"] /
-          response?.data?.page?.["page-size-requested"]
-      )
-    );
-    if (page === 1 && reqPageNo === 0) {
-      dispatch(setConent(response?.data?.page?.["content-items"]?.content));
-    } else if (data.length < page * 20) {
-      dispatch(
-        setConent([
-          ...data,
-          ...response?.data?.page?.["content-items"]?.content,
-        ])
+    try {
+      const response = await axios.get(url);
+      dispatch(setReqPageNo(response?.data?.page?.["page-num-requested"]));
+      setTotalPage(
+        Math.ceil(
+          response?.data?.page?.["total-content-items"] /
+            response?.data?.page?.["page-size-requested"]
+        )
       );
-    } else {
-      dispatch(setConent(data));
+      if (page === 1 && reqPageNo === 0) {
+        dispatch(setConent(response?.data?.page?.["content-items"]?.content));
+      } else if (data.length < page * 20) {
+        dispatch(
+          setConent([
+            ...data,
+            ...response?.data?.page?.["content-items"]?.content,
+          ])
+        );
+      } else {
+        dispatch(setConent(data));
+      }
+      setLoading(false);
+    } catch (error) {
+      throw new Error(error?.message);
     }
-    setLoading(false);
   };
 
   // state management using page
