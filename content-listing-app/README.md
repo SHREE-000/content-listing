@@ -1,3 +1,25 @@
+# Content Listing Application
+
+This is a React application for browsing images with search functionality, implemented using Redux Toolkit for state management. It also includes features such as a back button, auto-scrolling, responsiveness, and a no-result page. Additionally, test cases have been included for some files.
+
+## Features
+
+- Search functionality to find images.
+- State management using Redux Toolkit.
+- Back button functionality.
+- Auto-scrolling to improve user experience.
+- Responsive design for various screen sizes.
+- No-result page for empty search queries.
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/SHREE-000/content-listing.git
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
