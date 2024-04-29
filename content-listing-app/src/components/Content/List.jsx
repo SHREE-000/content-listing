@@ -1,10 +1,21 @@
 import { memo } from "react";
 import { ALT_IMG, baseURL } from "../../constants/general";
 
-const List = ({ placeholderRef, inView, data = [] }) => {
+const List = ({listProps}) => {
+  const { search, placeholderRef, inView, data = [] } = listProps;
   const handleImageError = (event) => {
     event.target.src = baseURL.ERRO_IMG;
     event.target.alt = `${ALT_IMG.CONTENT}-error`;
+  };
+  const highlightName = (name) => {
+    const words = name.split(new RegExp(`(${search})`, 'gi'));
+    return words.map((word, idx) => (
+      word.toLowerCase() === search.toLowerCase() ? (
+        <span key={idx} className="text-yellow-300">{word}</span>
+      ) : (
+        <span key={idx}>{word}</span>
+      )
+    ))
   };
   return (
     <>
@@ -25,7 +36,9 @@ const List = ({ placeholderRef, inView, data = [] }) => {
               />
             )}
             <p className="mt-5 mb-12 text-center text-wrap text-xs xs:text-lg h-2">
-              {elem?.name}
+              {
+                highlightName(elem?.name)
+              }
             </p>
           </div>
         );

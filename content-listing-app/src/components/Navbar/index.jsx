@@ -17,12 +17,14 @@ const Navbar = () => {
 
   const handlePage = () => {
     dispatch(setBackOperation());
+    setSearchValue("");
+    setFilteredSuggestions([]);
   };
   const handleChange = (event) => {
     const inputValue = event.target.value;
     setSearchValue(inputValue);
     const filteredSuggestions = contents.filter((suggestion) =>
-    suggestion.name.toLowerCase().startsWith(inputValue.toLowerCase())
+    suggestion.name.toLowerCase().includes(inputValue.toLowerCase())
   );
   setFilteredSuggestions(filteredSuggestions);
   };

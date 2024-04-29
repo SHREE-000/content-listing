@@ -6,6 +6,7 @@ import useAPI from "../../utils/customHooks/usAPI";
 import usePage from "../../utils/customHooks/usePage";
 import NotFound from "../../shared/components/NotFound";
 import { baseURL } from "../../constants/general";
+import { useSelector } from "react-redux";
 
 const Content = () => {
   // customhook used for counting page
@@ -19,6 +20,16 @@ const Content = () => {
 
   // customhook used for managing lazy loading
   const [placeholderRef, inView] = useLazyLoad();
+
+  // redux state for search text
+  const search = useSelector(state => state.content.search);
+
+  const listProps = {
+    search,
+    placeholderRef,
+    inView,
+    data
+  }
   return (
     <>
       {loading ? (
@@ -29,7 +40,7 @@ const Content = () => {
         <>
           {data.length > 0 ? 
         <div className="mt-5 w-full grid grid-cols-3">
-          <List placeholderRef={placeholderRef} inView={inView} data={data} />
+          <List listProps={listProps}/>
         </div>
           : <NotFound/>}
         </>
