@@ -5,7 +5,7 @@ import { addPage } from "../../features/contentSlice";
 const usePage = () => {
   const dispatch = useDispatch();
   const page = useSelector((state) => state.content.page);
-  const [prevScrollY, setPrevScrollY] = useState(0);
+  const [prevScrollY, setPrevScrollY] = useState(window.scrollY || document.documentElement.scrollTop);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,7 +14,7 @@ const usePage = () => {
         // scrolling down
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
-        if (windowHeight + scrollTop >= documentHeight) {
+         if (Math.ceil(windowHeight + scrollTop) >= documentHeight) {
           dispatch(addPage());
         }
       }
