@@ -1,4 +1,7 @@
+import { highlightName } from "../../utils/methods/general";
+
 const InputWithClear = ({ handleChange, handleClear, value, filteredSuggestions, handleSuggestionClick }) => {
+
   return (
     <>
     <input
@@ -21,7 +24,7 @@ const InputWithClear = ({ handleChange, handleClear, value, filteredSuggestions,
               onClick={() => handleSuggestionClick(suggestion.name)}
               className="text-center cursor-pointer px-3 py-2 bg-gray-800 hover:bg-black"
             >
-              {suggestion.name}
+              {highlightName(suggestion?.name, value)}
             </li>
           ))}
         </ul>
