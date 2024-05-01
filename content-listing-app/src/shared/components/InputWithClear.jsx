@@ -1,22 +1,30 @@
 import { highlightName } from "../../utils/methods/general";
 
-const InputWithClear = ({ handleChange, handleClear, value, filteredSuggestions, handleSuggestionClick }) => {
-
+const InputWithClear = ({
+  handleChange,
+  handleClear,
+  value,
+  filteredSuggestions,
+  handleSuggestionClick,
+  handleKeyPress,
+}) => {
   return (
     <>
-    <input
+      <input
+        onKeyDown={handleKeyPress}
         value={value}
         onChange={handleChange}
         type="text"
         className="pl-1 pr-1 text-black h-5 rounded-l-lg border-0 focus:outline-none"
       />
       <button
+        type="button"
         onClick={handleClear}
-        className="bg-white text-black h-5 rounded-r-lg pr-1 mr-1"
+        className="bg-white text-black h-5 rounded-r-lg pr-2 mr-2 relative"
       >
-        &times;
+        <span className="absolute bottom-0 right-2">&times;</span>
       </button>
-      {filteredSuggestions.length > 0 && ( 
+      {filteredSuggestions.length > 0 && (
         <ul className="absolute z-10 left-0 mt-8 w-full bg-black border border-gray-300 rounded shadow">
           {filteredSuggestions.map((suggestion, index) => (
             <li

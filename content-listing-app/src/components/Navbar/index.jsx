@@ -45,6 +45,13 @@ const Navbar = () => {
     setFilteredSuggestions([]);
     if (!value.trim()) dispatch(setBackOperation());
   };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch(); 
+    }
+  };
+
   return (
     <div
       className="mt-5 mb-5 flex flex-col xs:flex-row xs:align-middle"
@@ -61,6 +68,7 @@ const Navbar = () => {
       </div>
       <div className="flex mt-2">
         <InputWithClear
+          handleKeyPress={handleKeyPress}
           filteredSuggestions={filteredSuggestions}
           handleChange={handleChange}
           handleClear={handleClear}
