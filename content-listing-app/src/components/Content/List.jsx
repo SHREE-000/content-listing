@@ -3,7 +3,7 @@ import { ALT_IMG, baseURL } from "../../constants/general";
 import { highlightName } from "../../utils/methods/general";
 
 const List = ({ listProps }) => {
-  const { search, placeholderRef, inView, data = [] } = listProps;
+  const { search, placeholderRef, inView, filteredData = [] } = listProps;
   const handleImageError = (event) => {
     event.target.src = baseURL.ERRO_IMG;
     event.target.alt = `${ALT_IMG.CONTENT}-error`;
@@ -11,7 +11,7 @@ const List = ({ listProps }) => {
 
   return (
     <>
-      {data.map((elem, index) => {
+      {filteredData.map((elem, index) => {
         return (
           <div
             key={index}

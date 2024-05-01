@@ -12,14 +12,6 @@ const useAPI = (url, page = 1) => {
   const [loading, setLoading] = useState(true);
   const [totalPage, setTotalPage] = useState(1);
 
-  // filtering data by search text from user
-  const filterSearch = () => {
-    const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(search.toLowerCase())
-    );
-    dispatch(setConent(filtered));
-  };
-
   // axios call
   const fetchApi = async () => {
     try {
@@ -62,11 +54,6 @@ const useAPI = (url, page = 1) => {
   useEffect(() => {
     fetchApi();
   }, [isBackButton]);
-
-  // state management using search
-  useEffect(() => {
-    filterSearch();
-  }, [search, page, data.length]);
 
   return { loading, data };
 };
