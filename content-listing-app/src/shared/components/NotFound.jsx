@@ -4,8 +4,10 @@ import { useDispatch } from "react-redux";
 
 const NotFound = () => {
   const dispatch = useDispatch();
+  const screenHeight = window.innerHeight;
+  const remainingHeight = screenHeight - 100;
   return (
-    <div role="alert" className="bg-black flex justify-center items-center h-screen">
+    <div role="alert" style={{ minHeight: `${remainingHeight}px` }} className="bg-black flex justify-center items-center">
       <div className="bg-white p-8 rounded shadow-md text-center">
         <h1 className="text-2xl font-semibold text-gray-800 mb-4">
           {HEADING.NO_RESULT}
