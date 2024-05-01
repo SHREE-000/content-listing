@@ -54,7 +54,7 @@ const Content = () => {
         </div>
       ) : (
         <>
-          {data.length > 0 ? (
+          {filteredData.length > 0 ? (
             <div className="mt-5 w-full grid grid-cols-3">
               <List listProps={listProps} />
             </div>
